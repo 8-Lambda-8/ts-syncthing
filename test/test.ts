@@ -11,3 +11,7 @@ st.system.ping((res, err) => {
   if (err) return;
   console.log(res);
 });
+st.system.restart((res, err) => {
+  if (err) return;
+  console.log(res);
+});

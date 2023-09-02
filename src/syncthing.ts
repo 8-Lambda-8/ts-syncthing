@@ -11,11 +11,15 @@ type cb = (res: unknown, err?: Error) => void;
 export class syncthing {
   private config: config;
 
-  private req(_options: { endpoint: string }, cb: cb): void | Promise<unknown> {
+  private req(
+    _options: { endpoint: string; post?: boolean },
+    cb: cb
+  ): void | Promise<unknown> {
     const options: http.RequestOptions = {
       hostname: this.config.host,
       port: this.config.port,
       path: `/rest/${_options.endpoint}`,
+      method: _options.post ? "POST" : "GET",
     };
     options.headers = { "X-API-Key": this.config.apiKey };
 
@@ -45,5 +49,7 @@ export class syncthing {
 
   public system = {
     ping: (cb: cb) => this.req({ endpoint: "system/ping" }, cb),
+    restart: (cb: cb) =>
+      this.req({ endpoint: "system/restart", post: true }, cb),
   };
 }
