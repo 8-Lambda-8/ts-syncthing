@@ -7,6 +7,7 @@
     "build": "tsc",
     "build:watch": "tsc --watch",
     "lint": "prettier -w . && eslint . --ext .ts,.vue,.cjs --fix",
+    "test": "npm run build && node build/test/test.js"
   },
   "keywords": [
     "syncthing",
