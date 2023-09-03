@@ -1,11 +1,11 @@
 import * as http from "http";
-import { config, cbT, pingT, restartT, requestOptionsT } from "./types";
+import { configT, cbT, pingT, restartT, requestOptionsT } from "./types";
 
 export class syncthing {
-  private config: config;
+  private _config: configT;
 
-  public constructor(config: config) {
-    this.config = {
+  public constructor(config: configT) {
+    this._config = {
       host: config.host || "127.0.0.1",
       port: 8384,
       apiKey: undefined,
@@ -44,12 +44,12 @@ export class syncthing {
     console.log(argsString);
 
     const options: http.RequestOptions = {
-      hostname: this.config.host,
-      port: this.config.port,
+      hostname: this._config.host,
+      port: this._config.port,
       path: `/rest/${_options.endpoint}?${argsString}`,
       method: _options.post ? "POST" : "GET",
     };
-    options.headers = { "X-API-Key": this.config.apiKey };
+    options.headers = { "X-API-Key": this._config.apiKey };
 
     http.get(options, (res) => {
       let data = "";

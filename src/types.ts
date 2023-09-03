@@ -1,4 +1,4 @@
-export type config = {
+export type configT = {
   host?: string;
   port?: number;
   apiKey: string;
