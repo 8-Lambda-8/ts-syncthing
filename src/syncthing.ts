@@ -92,7 +92,26 @@ export class syncthing {
 
   public system = {
     browse: this.system_browse.bind(this),
+    //connections:this.system_connections.bind(this),
+    //getDebug:this.system_getDebug.bind(this),
+    //setDebug:this.system_setDebug.bind(this),
+    //getDiscovery:this.system_getDiscovery.bind(this),
+    //setDiscovery:this.system_setDiscovery.bind(this),
+    //clearError:this.system_clearError.bind(this),
+    //getError:this.system_getError.bind(this),
+    //setError:this.system_setError.bind(this),
+    //log:this.system_log.bind(this),
+    //log_txt:this.system_log_txt.bind(this),
+    //paths:this.system_paths.bind(this),
+    //pause:this.system_pause.bind(this),
     ping: this.system_ping.bind(this),
+    //reset:this.system_reset.bind(this),
     restart: this.system_restart.bind(this),
+    //resume:this.system_resume.bind(this),
+    //shutdown:this.system_shutdown.bind(this),
+    //status:this.system_status.bind(this),
+    //upgradeCheck:this.system_upgradeCheck.bind(this),
+    //upgradeDo:this.system_upgradeDo.bind(this),
+    //version:this.system_version.bind(this),
   };
 }
