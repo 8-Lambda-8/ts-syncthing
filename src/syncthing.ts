@@ -165,4 +165,12 @@ export class syncthing {
     //randomString: this.svc_randomString.bind(this),
     //report: this.svc_report.bind(this),
   };
+  public debug = {
+    //peerCompletion: this.debug_peerCompletion.bind(this),
+    //httpMetrics: this.debug_httpMetrics.bind(this),
+    //cpuprof: this.debug_cpuprof.bind(this),
+    //heapprof: this.debug_heapprof.bind(this),
+    //support: this.debug_support.bind(this),
+    //file: this.debug_file.bind(this),
+  };
 }
