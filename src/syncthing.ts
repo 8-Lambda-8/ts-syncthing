@@ -155,4 +155,8 @@ export class syncthing {
     //events: this.events_events.bind(this),
     //disk: this.disk.bind(this),
   };
+  public stats = {
+    //device: this.stats_device.bind(this),
+    //folder: this.stats_folder.bind(this),
+  };
 }
