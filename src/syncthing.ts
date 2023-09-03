@@ -159,4 +159,10 @@ export class syncthing {
     //device: this.stats_device.bind(this),
     //folder: this.stats_folder.bind(this),
   };
+  public svc = {
+    //deviceId: this.svc_deviceId.bind(this),
+    //lang: this.svc_deviceId.bind(this),
+    //randomString: this.svc_randomString.bind(this),
+    //report: this.svc_report.bind(this),
+  };
 }
