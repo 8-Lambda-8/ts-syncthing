@@ -130,5 +130,10 @@ export class syncthing {
     //deletePendingDevices: this.cluster_deletePendingDevices.bind(this),
     //getPendingFolders: this.cluster_getPendingFolders.bind(this),
     //deletePendingFolders: this.cluster_deletePendingFolders.bind(this),
-  }
+  };
+  public folder = {
+    //errors: this.folder_errors.bind(this),
+    //getVersions: this.folder_getVersions.bind(this),
+    //setVersions: this.folder_setVersions.bind(this),
+  };
 }
