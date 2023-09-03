@@ -1,4 +1,5 @@
 import * as http from "http";
+import { pingT, restartT } from "./types";
 
 export type config = {
   host?: string;
@@ -20,6 +21,39 @@ export class syncthing {
     };
   }
 
+  private request(options: {
+    endpoint: string;
+    post?: boolean;
+    args?: { [key: string]: string };
+  }): Promise<unknown>;
+  private request(
+    options: {
+      endpoint: string;
+      post?: boolean;
+      args?: { [key: string]: string };
+    },
+    cb: cb,
+  ): void;
+  private request(
+    options: {
+      endpoint: string;
+      post?: boolean;
+      args?: { [key: string]: string };
+    },
+    cb?: cb,
+  ): void | Promise<unknown> {
+    if (cb) {
+      this.req(options, cb);
+    } else {
+      return new Promise((resolve, reject) => {
+        this.req(options, (res, err) => {
+          resolve(res);
+          reject(err);
+        });
+      });
+    }
+  }
+
   private req(
     _options: {
       endpoint: string;
@@ -27,8 +61,7 @@ export class syncthing {
       args?: { [key: string]: string };
     },
     cb: cb,
-  ): void | Promise<unknown> {
-    
+  ): void {
     const args = [];
     for (const arg in _options.args) {
       args.push(`${encodeURI(arg)}=${encodeURI(_options.args[arg])}`);
@@ -59,12 +92,31 @@ export class syncthing {
     });
   }
 
+  private system_ping(): Promise<pingT>;
+  private system_ping(cb: cb): void;
+  private system_ping(cb?: cb): Promise<pingT> | void {
+    return this.request({ endpoint: "system/ping" }, cb);
+  }
+
+  private system_browse(path: string): Promise<string[]>;
+  private system_browse(path: string, cb: cb): void;
+  private system_browse(path: string, cb?: cb): Promise<string[]> | void {
+    return this.request(
+      { endpoint: "system/browse", args: { current: path } },
+      cb,
+    );
+  }
+
+  private system_restart(): Promise<restartT>;
+  private system_restart(cb: cb): void;
+  private system_restart(cb?: cb): Promise<restartT> | void {
+    return this.request({ endpoint: "system/browse" }, cb);
+  }
+
 
   public system = {
-    browse: (path: string, cb: cb) =>
-      this.req({ endpoint: "system/browse", args: { current: path } }, cb),
-    ping: (cb: cb) => this.req({ endpoint: "system/ping" }, cb),
-    restart: (cb: cb) =>
-      this.req({ endpoint: "system/restart", post: true }, cb),
+    browse: this.system_browse,
+    ping: this.system_ping,
+    restart: this.system_restart,
   };
 }
