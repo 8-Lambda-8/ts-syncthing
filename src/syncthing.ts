@@ -1,5 +1,5 @@
 import * as http from "http";
-import { config, cbT, pingT, restartT } from "./types";
+import { config, cbT, pingT, restartT, requestOptionsT } from "./types";
 
 export class syncthing {
   private config: config;
@@ -13,27 +13,9 @@ export class syncthing {
     };
   }
 
-  private request<T>(options: {
-    endpoint: string;
-    post?: boolean;
-    args?: { [key: string]: string };
-  }): Promise<T>;
-  private request<T>(
-    options: {
-      endpoint: string;
-      post?: boolean;
-      args?: { [key: string]: string };
-    },
-    cb: cbT<T>,
-  ): void;
-  private request<T>(
-    options: {
-      endpoint: string;
-      post?: boolean;
-      args?: { [key: string]: string };
-    },
-    cb?: cbT<T>,
-  ): void | Promise<T> {
+  private request<T>(options: requestOptionsT): Promise<T>;
+  private request<T>(options: requestOptionsT, cb: cbT<T>): void;
+  private request<T>(options: requestOptionsT, cb?: cbT<T>): void | Promise<T> {
     if (cb) {
       this.req(options, cb);
     } else {

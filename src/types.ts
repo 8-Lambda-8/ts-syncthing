@@ -4,6 +4,12 @@ export type config = {
   apiKey: string;
 };
 
+export type requestOptionsT = {
+  endpoint: string;
+  post?: boolean;
+  args?: { [key: string]: string };
+};
+
 export type cbT<T> = (res: T, err?: Error) => void;
 
 export type pingT = { ping: "pong" };
