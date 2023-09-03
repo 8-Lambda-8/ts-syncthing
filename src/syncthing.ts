@@ -12,13 +12,25 @@ export class syncthing {
   private config: config;
 
   private req(
-    _options: { endpoint: string; post?: boolean },
+    _options: {
+      endpoint: string;
+      post?: boolean;
+      args?: { [key: string]: string };
+    },
     cb: cb,
   ): void | Promise<unknown> {
+    
+    const args = [];
+    for (const arg in _options.args) {
+      args.push(`${encodeURI(arg)}=${encodeURI(_options.args[arg])}`);
+    }
+    const argsString = args.join("&");
+    console.log(argsString);
+
     const options: http.RequestOptions = {
       hostname: this.config.host,
       port: this.config.port,
-      path: `/rest/${_options.endpoint}`,
+      path: `/rest/${_options.endpoint}?${argsString}`,
       method: _options.post ? "POST" : "GET",
     };
     options.headers = { "X-API-Key": this.config.apiKey };
@@ -48,6 +60,8 @@ export class syncthing {
   }
 
   public system = {
+    browse: (path: string, cb: cb) =>
+      this.req({ endpoint: "system/browse", args: { current: path } }, cb),
     ping: (cb: cb) => this.req({ endpoint: "system/ping" }, cb),
     restart: (cb: cb) =>
       this.req({ endpoint: "system/restart", post: true }, cb),
