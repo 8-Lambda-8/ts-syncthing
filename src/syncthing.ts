@@ -13,7 +13,7 @@ export class syncthing {
 
   private req(
     _options: { endpoint: string; post?: boolean },
-    cb: cb
+    cb: cb,
   ): void | Promise<unknown> {
     const options: http.RequestOptions = {
       hostname: this.config.host,
