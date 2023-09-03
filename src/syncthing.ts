@@ -173,4 +173,7 @@ export class syncthing {
     //support: this.debug_support.bind(this),
     //file: this.debug_file.bind(this),
   };
+  public noauth = {
+    //health: this.noauth_health.bind(this),
+  };
 }
