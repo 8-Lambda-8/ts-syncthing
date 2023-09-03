@@ -114,4 +114,15 @@ export class syncthing {
     //upgradeDo:this.system_upgradeDo.bind(this),
     //version:this.system_version.bind(this),
   };
+  public config = {
+    //getConfig: this.config_config.bind(this),
+    //restartRequired: this.config_restartRequired.bind(this),
+    //folders: this.config_folders.bind(this),
+    //devices: this.config_devices.bind(this),
+    //folder: this.config_folder.bind(this),
+    //device: this.config_device.bind(this),
+    //options: this.config_options.bind(this),
+    //ldap: this.config_ldap.bind(this),
+    //gui: this.config_gui.bind(this),
+  };
 }
