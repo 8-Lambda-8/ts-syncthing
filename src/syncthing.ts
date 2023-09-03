@@ -136,4 +136,19 @@ export class syncthing {
     //getVersions: this.folder_getVersions.bind(this),
     //setVersions: this.folder_setVersions.bind(this),
   };
+  public db = {
+    //browse: this.db_browse.bind(this),
+    //completion: this.db_completion.bind(this),
+    //file: this.db_file.bind(this),
+    //getIgnores: this.db_getIgnores.bind(this),
+    //setIgnores: this.db_setIgnores.bind(this),
+    //localchanged: this.db_localchanged.bind(this),
+    //need: this.db_need.bind(this),
+    //override: this.db_override.bind(this),
+    //prio: this.db_prio.bind(this),
+    //remoteneed: this.db_remoteneed.bind(this),
+    //revert: this.db_revert.bind(this),
+    //scan: this.db_scan.bind(this),
+    //status: this.db_status.bind(this),
+  };
 }
