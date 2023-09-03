@@ -11,6 +11,15 @@ type cb = (res: unknown, err?: Error) => void;
 export class syncthing {
   private config: config;
 
+  public constructor(config: config) {
+    this.config = {
+      host: config.host || "127.0.0.1",
+      port: 8384,
+      apiKey: undefined,
+      ...config,
+    };
+  }
+
   private req(
     _options: {
       endpoint: string;
@@ -50,14 +59,6 @@ export class syncthing {
     });
   }
 
-  public constructor(config: config) {
-    this.config = {
-      host: config.host || "127.0.0.1",
-      port: 8384,
-      apiKey: undefined,
-      ...config,
-    };
-  }
 
   public system = {
     browse: (path: string, cb: cb) =>
