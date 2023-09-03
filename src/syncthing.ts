@@ -151,4 +151,8 @@ export class syncthing {
     //scan: this.db_scan.bind(this),
     //status: this.db_status.bind(this),
   };
+  public events = {
+    //events: this.events_events.bind(this),
+    //disk: this.disk.bind(this),
+  };
 }
