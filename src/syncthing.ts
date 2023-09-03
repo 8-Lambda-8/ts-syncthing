@@ -1,13 +1,11 @@
 import * as http from "http";
-import { pingT, restartT } from "./types";
+import { cbT, pingT, restartT } from "./types";
 
 export type config = {
   host?: string;
   port?: number;
   apiKey: string;
 };
-
-type cb = (res: unknown, err?: Error) => void;
 
 export class syncthing {
   private config: config;
@@ -21,32 +19,32 @@ export class syncthing {
     };
   }
 
-  private request(options: {
+  private request<T>(options: {
     endpoint: string;
     post?: boolean;
     args?: { [key: string]: string };
-  }): Promise<unknown>;
-  private request(
+  }): Promise<T>;
+  private request<T>(
     options: {
       endpoint: string;
       post?: boolean;
       args?: { [key: string]: string };
     },
-    cb: cb,
+    cb: cbT<T>,
   ): void;
-  private request(
+  private request<T>(
     options: {
       endpoint: string;
       post?: boolean;
       args?: { [key: string]: string };
     },
-    cb?: cb,
-  ): void | Promise<unknown> {
+    cb?: cbT<T>,
+  ): void | Promise<T> {
     if (cb) {
       this.req(options, cb);
     } else {
       return new Promise((resolve, reject) => {
-        this.req(options, (res, err) => {
+        this.req(options, (res: T, err: Error) => {
           resolve(res);
           reject(err);
         });
@@ -54,13 +52,13 @@ export class syncthing {
     }
   }
 
-  private req(
+  private req<T>(
     _options: {
       endpoint: string;
       post?: boolean;
       args?: { [key: string]: string };
     },
-    cb: cb,
+    cb: cbT<T>,
   ): void {
     const args = [];
     for (const arg in _options.args) {
@@ -93,26 +91,25 @@ export class syncthing {
   }
 
   private system_ping(): Promise<pingT>;
-  private system_ping(cb: cb): void;
-  private system_ping(cb?: cb): Promise<pingT> | void {
-    return this.request({ endpoint: "system/ping" }, cb);
+  private system_ping(callback: cbT<pingT>): void;
+  private system_ping(callback?: cbT<pingT>): Promise<pingT> | void {
+    return this.request({ endpoint: "system/ping" }, callback);
   }
 
   private system_browse(path: string): Promise<string[]>;
-  private system_browse(path: string, cb: cb): void;
-  private system_browse(path: string, cb?: cb): Promise<string[]> | void {
+  private system_browse(path: string, callback: cbT<string[]>): void;
+  private system_browse(path: string, callback?: cbT<string[]>): Promise<string[]> | void {
     return this.request(
       { endpoint: "system/browse", args: { current: path } },
-      cb,
+      callback,
     );
   }
 
   private system_restart(): Promise<restartT>;
-  private system_restart(cb: cb): void;
-  private system_restart(cb?: cb): Promise<restartT> | void {
-    return this.request({ endpoint: "system/browse" }, cb);
+  private system_restart(callback: cbT<restartT>): void;
+  private system_restart(callback?: cbT<restartT>): Promise<restartT> | void {
+    return this.request({ endpoint: "system/browse" }, callback);
   }
-
 
   public system = {
     browse: this.system_browse,
