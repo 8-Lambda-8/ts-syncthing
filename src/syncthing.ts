@@ -125,4 +125,10 @@ export class syncthing {
     //ldap: this.config_ldap.bind(this),
     //gui: this.config_gui.bind(this),
   };
+  public cluster = {
+    //getPendingDevices: this.cluster_getPendingDevices.bind(this),
+    //deletePendingDevices: this.cluster_deletePendingDevices.bind(this),
+    //getPendingFolders: this.cluster_getPendingFolders.bind(this),
+    //deletePendingFolders: this.cluster_deletePendingFolders.bind(this),
+  }
 }
