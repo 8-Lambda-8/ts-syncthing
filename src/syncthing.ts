@@ -1,11 +1,5 @@
 import * as http from "http";
-import { cbT, pingT, restartT } from "./types";
-
-export type config = {
-  host?: string;
-  port?: number;
-  apiKey: string;
-};
+import { config, cbT, pingT, restartT } from "./types";
 
 export class syncthing {
   private config: config;
@@ -98,7 +92,10 @@ export class syncthing {
 
   private system_browse(path: string): Promise<string[]>;
   private system_browse(path: string, callback: cbT<string[]>): void;
-  private system_browse(path: string, callback?: cbT<string[]>): Promise<string[]> | void {
+  private system_browse(
+    path: string,
+    callback?: cbT<string[]>,
+  ): Promise<string[]> | void {
     return this.request(
       { endpoint: "system/browse", args: { current: path } },
       callback,
