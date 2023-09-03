@@ -91,8 +91,8 @@ export class syncthing {
   }
 
   public system = {
-    browse: this.system_browse,
-    ping: this.system_ping,
-    restart: this.system_restart,
+    browse: this.system_browse.bind(this),
+    ping: this.system_ping.bind(this),
+    restart: this.system_restart.bind(this),
   };
 }
