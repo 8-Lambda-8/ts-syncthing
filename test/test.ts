@@ -1,17 +1,22 @@
-import { syncthing, config } from "../src/syncthing";
+import { configT } from "src/types";
+import { syncthing } from "../src/syncthing";
 
-const options: config = {
+const options: configT = {
   apiKey: "Fumn9ume4NczkVnTgsagjmtbVpAnDizT",
 };
 
 const st = new syncthing(options);
 
-console.log("ping ");
-st.system.ping((res, err) => {
-  if (err) return;
-  console.log(res);
-});
-st.system.restart((res, err) => {
-  if (err) return;
-  console.log(res);
-});
+function logThis(res, err) {
+  if (err) console.error(err);
+  else console.log(res);
+}
+
+st.system.ping(logThis);
+st.system.ping().then(console.log);
+
+st.system.browse("/home/jakob/", logThis);
+st.system.browse("/home/jakob/").then(console.log);
+
+st.system.connections(logThis);
+st.system.connections().then(console.log);
