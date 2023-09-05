@@ -13,5 +13,25 @@ export type requestOptionsT = {
 export type cbT<T> = (res: T, err?: Error) => void;
 export type funOverT<T> = (() => Promise<T>) & ((callback: cbT<T>) => void);
 
+export type connectionsT = {
+  connections: {
+    [id: string]: {
+      address: string;
+      at: string;
+      clientVersion: string;
+      connected: boolean;
+      inBytesTotal: number;
+      outBytesTotal: number;
+      paused: boolean;
+      startedAt: string;
+      type: string;
+    };
+  };
+  total: {
+    at: string;
+    inBytesTotal: number;
+    outBytesTotal: number;
+  };
+};
 export type pingT = { ping: "pong" };
 export type restartT = { ok: "restart" };

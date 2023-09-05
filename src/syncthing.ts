@@ -6,6 +6,7 @@ import {
   restartT,
   requestOptionsT,
   funOverT,
+  connectionsT,
 } from "./types";
 
 export class syncthing {
@@ -81,7 +82,13 @@ export class syncthing {
       { endpoint: "system/browse", args: { current: path } },
       callback,
     )) as ((path: string) => Promise<string[]>) &
-    ((callback: cbT<string[]>, path: string) => void);
+    ((path: string, callback: cbT<string[]>) => void);
+
+  private system_connections = ((callback?: cbT<connectionsT>) =>
+    this.request(
+      { endpoint: "system/connections" },
+      callback,
+    )) as funOverT<connectionsT>;
 
   private system_restart = ((callback?: cbT<restartT>) =>
     this.request(
@@ -91,7 +98,7 @@ export class syncthing {
 
   public system = {
     browse: this.system_browse,
-    //connections:this.system_connections,
+    connections: this.system_connections,
     //getDebug:this.system_getDebug,
     //setDebug:this.system_setDebug,
     //getDiscovery:this.system_getDiscovery,
