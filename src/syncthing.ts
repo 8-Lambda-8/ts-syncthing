@@ -1,5 +1,12 @@
 import * as http from "http";
-import { configT, cbT, pingT, restartT, requestOptionsT } from "./types";
+import {
+  configT,
+  cbT,
+  pingT,
+  restartT,
+  requestOptionsT,
+  funOverT,
+} from "./types";
 
 export class syncthing {
   private _config: configT;
@@ -66,114 +73,106 @@ export class syncthing {
     });
   }
 
-  private system_ping(): Promise<pingT>;
-  private system_ping(callback: cbT<pingT>): void;
-  private system_ping(callback?: cbT<pingT>): Promise<pingT> | void {
-    return this.request({ endpoint: "system/ping" }, callback);
-  }
+  private system_ping = ((callback?: cbT<pingT>) =>
+    this.request({ endpoint: "system/ping" }, callback)) as funOverT<pingT>;
 
-  private system_browse(path: string): Promise<string[]>;
-  private system_browse(path: string, callback: cbT<string[]>): void;
-  private system_browse(
-    path: string,
-    callback?: cbT<string[]>,
-  ): Promise<string[]> | void {
-    return this.request(
+  private system_browse = ((path: string, callback?: cbT<string[]>) =>
+    this.request(
       { endpoint: "system/browse", args: { current: path } },
       callback,
-    );
-  }
+    )) as ((path: string) => Promise<string[]>) &
+    ((callback: cbT<string[]>, path: string) => void);
 
-  private system_restart(): Promise<restartT>;
-  private system_restart(callback: cbT<restartT>): void;
-  private system_restart(callback?: cbT<restartT>): Promise<restartT> | void {
-    return this.request({ endpoint: "system/browse" }, callback);
-  }
+  private system_restart = ((callback?: cbT<restartT>) =>
+    this.request(
+      { endpoint: "system/browse" },
+      callback,
+    )) as funOverT<restartT>;
 
   public system = {
-    browse: this.system_browse.bind(this),
-    //connections:this.system_connections.bind(this),
-    //getDebug:this.system_getDebug.bind(this),
-    //setDebug:this.system_setDebug.bind(this),
-    //getDiscovery:this.system_getDiscovery.bind(this),
-    //setDiscovery:this.system_setDiscovery.bind(this),
-    //clearError:this.system_clearError.bind(this),
-    //getError:this.system_getError.bind(this),
-    //setError:this.system_setError.bind(this),
-    //log:this.system_log.bind(this),
-    //log_txt:this.system_log_txt.bind(this),
-    //paths:this.system_paths.bind(this),
-    //pause:this.system_pause.bind(this),
-    ping: this.system_ping.bind(this),
-    //reset:this.system_reset.bind(this),
-    restart: this.system_restart.bind(this),
-    //resume:this.system_resume.bind(this),
-    //shutdown:this.system_shutdown.bind(this),
-    //status:this.system_status.bind(this),
-    //upgradeCheck:this.system_upgradeCheck.bind(this),
-    //upgradeDo:this.system_upgradeDo.bind(this),
-    //version:this.system_version.bind(this),
+    browse: this.system_browse,
+    //connections:this.system_connections,
+    //getDebug:this.system_getDebug,
+    //setDebug:this.system_setDebug,
+    //getDiscovery:this.system_getDiscovery,
+    //setDiscovery:this.system_setDiscovery,
+    //clearError:this.system_clearError,
+    //getError:this.system_getError,
+    //setError:this.system_setError,
+    //log:this.system_log,
+    //log_txt:this.system_log_txt,
+    //paths:this.system_paths,
+    //pause:this.system_pause,
+    ping: this.system_ping,
+    //reset:this.system_reset,
+    restart: this.system_restart,
+    //resume:this.system_resume,
+    //shutdown:this.system_shutdown,
+    //status:this.system_status,
+    //upgradeCheck:this.system_upgradeCheck,
+    //upgradeDo:this.system_upgradeDo,
+    //version:this.system_version,
   };
   public config = {
-    //getConfig: this.config_config.bind(this),
-    //restartRequired: this.config_restartRequired.bind(this),
-    //folders: this.config_folders.bind(this),
-    //devices: this.config_devices.bind(this),
-    //folder: this.config_folder.bind(this),
-    //device: this.config_device.bind(this),
-    //options: this.config_options.bind(this),
-    //ldap: this.config_ldap.bind(this),
-    //gui: this.config_gui.bind(this),
+    //getConfig: this.config_config,
+    //restartRequired: this.config_restartRequired,
+    //folders: this.config_folders,
+    //devices: this.config_devices,
+    //folder: this.config_folder,
+    //device: this.config_device,
+    //options: this.config_options,
+    //ldap: this.config_ldap,
+    //gui: this.config_gui,
   };
   public cluster = {
-    //getPendingDevices: this.cluster_getPendingDevices.bind(this),
-    //deletePendingDevices: this.cluster_deletePendingDevices.bind(this),
-    //getPendingFolders: this.cluster_getPendingFolders.bind(this),
-    //deletePendingFolders: this.cluster_deletePendingFolders.bind(this),
+    //getPendingDevices: this.cluster_getPendingDevices,
+    //deletePendingDevices: this.cluster_deletePendingDevices,
+    //getPendingFolders: this.cluster_getPendingFolders,
+    //deletePendingFolders: this.cluster_deletePendingFolders,
   };
   public folder = {
-    //errors: this.folder_errors.bind(this),
-    //getVersions: this.folder_getVersions.bind(this),
-    //setVersions: this.folder_setVersions.bind(this),
+    //errors: this.folder_errors,
+    //getVersions: this.folder_getVersions,
+    //setVersions: this.folder_setVersions,
   };
   public db = {
-    //browse: this.db_browse.bind(this),
-    //completion: this.db_completion.bind(this),
-    //file: this.db_file.bind(this),
-    //getIgnores: this.db_getIgnores.bind(this),
-    //setIgnores: this.db_setIgnores.bind(this),
-    //localchanged: this.db_localchanged.bind(this),
-    //need: this.db_need.bind(this),
-    //override: this.db_override.bind(this),
-    //prio: this.db_prio.bind(this),
-    //remoteneed: this.db_remoteneed.bind(this),
-    //revert: this.db_revert.bind(this),
-    //scan: this.db_scan.bind(this),
-    //status: this.db_status.bind(this),
+    //browse: this.db_browse,
+    //completion: this.db_completion,
+    //file: this.db_file,
+    //getIgnores: this.db_getIgnores,
+    //setIgnores: this.db_setIgnores,
+    //localchanged: this.db_localchanged,
+    //need: this.db_need,
+    //override: this.db_override,
+    //prio: this.db_prio,
+    //remoteneed: this.db_remoteneed,
+    //revert: this.db_revert,
+    //scan: this.db_scan,
+    //status: this.db_status,
   };
   public events = {
-    //events: this.events_events.bind(this),
-    //disk: this.disk.bind(this),
+    //events: this.events_events,
+    //disk: this.disk,
   };
   public stats = {
-    //device: this.stats_device.bind(this),
-    //folder: this.stats_folder.bind(this),
+    //device: this.stats_device,
+    //folder: this.stats_folder,
   };
   public svc = {
-    //deviceId: this.svc_deviceId.bind(this),
-    //lang: this.svc_deviceId.bind(this),
-    //randomString: this.svc_randomString.bind(this),
-    //report: this.svc_report.bind(this),
+    //deviceId: this.svc_deviceId,
+    //lang: this.svc_deviceId,
+    //randomString: this.svc_randomString,
+    //report: this.svc_report,
   };
   public debug = {
-    //peerCompletion: this.debug_peerCompletion.bind(this),
-    //httpMetrics: this.debug_httpMetrics.bind(this),
-    //cpuprof: this.debug_cpuprof.bind(this),
-    //heapprof: this.debug_heapprof.bind(this),
-    //support: this.debug_support.bind(this),
-    //file: this.debug_file.bind(this),
+    //peerCompletion: this.debug_peerCompletion,
+    //httpMetrics: this.debug_httpMetrics,
+    //cpuprof: this.debug_cpuprof,
+    //heapprof: this.debug_heapprof,
+    //support: this.debug_support,
+    //file: this.debug_file,
   };
   public noauth = {
-    //health: this.noauth_health.bind(this),
+    //health: this.noauth_health,
   };
 }
