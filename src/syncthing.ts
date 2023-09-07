@@ -7,6 +7,7 @@ import {
   requestOptionsT,
   funOverT,
   connectionsT,
+  debugT,
 } from "./types";
 
 export class syncthing {
@@ -46,7 +47,8 @@ export class syncthing {
   ): void {
     const args = [];
     for (const arg in _options.args) {
-      args.push(`${encodeURI(arg)}=${encodeURI(_options.args[arg])}`);
+      if (_options.args[arg].length > 0)
+        args.push(`${encodeURI(arg)}=${encodeURI(_options.args[arg])}`);
     }
     const argsString = args.join("&");
     console.log(argsString);
@@ -66,7 +68,18 @@ export class syncthing {
       });
 
       res.on("end", () => {
-        cb(JSON.parse(data));
+        let json: T;
+        if (!data.length) {
+          json = "empty response" as T;
+          cb(json);
+          return;
+        }
+        try {
+          json = JSON.parse(data);
+        } catch (error) {
+          console.error(error);
+        }
+        cb(json);
       });
       res.on("error", (err) => {
         cb(null, err);
@@ -90,6 +103,24 @@ export class syncthing {
       callback,
     )) as funOverT<connectionsT>;
 
+  private system_getDebug = ((callback?: cbT<debugT>) =>
+    this.request({ endpoint: "system/debug" }, callback)) as funOverT<debugT>;
+
+  private system_setDebug = ((
+    enable: string[],
+    disable: string[],
+    callback?: cbT<string>,
+  ) =>
+    this.request(
+      {
+        args: { enable: enable.join(","), disable: disable.join(",") },
+        endpoint: "system/debug",
+        post: true,
+      },
+      callback,
+    )) as ((enable: string[], disable: string[]) => Promise<string>) &
+    ((enable: string[], disable: string[], callback: cbT<string>) => void);
+
   private system_restart = ((callback?: cbT<restartT>) =>
     this.request(
       { endpoint: "system/browse" },
@@ -99,8 +130,8 @@ export class syncthing {
   public system = {
     browse: this.system_browse,
     connections: this.system_connections,
-    //getDebug:this.system_getDebug,
-    //setDebug:this.system_setDebug,
+    getDebug: this.system_getDebug,
+    setDebug: this.system_setDebug,
     //getDiscovery:this.system_getDiscovery,
     //setDiscovery:this.system_setDiscovery,
     //clearError:this.system_clearError,

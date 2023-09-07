@@ -15,8 +15,8 @@ function logThis(res, err) {
 st.system.ping(logThis);
 st.system.ping().then(console.log);
 
-st.system.browse("/home/jakob/", logThis);
-st.system.browse("/home/jakob/").then(console.log);
+st.system.getDebug(logThis);
+st.system.getDebug().then(console.log);
 
-st.system.connections(logThis);
-st.system.connections().then(console.log);
+st.system.setDebug([], ["api"], logThis);
+st.system.setDebug([], ["api"]).then(console.log);
