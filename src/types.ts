@@ -37,5 +37,7 @@ export type debugT = {
   enabled: string[];
   facilities: { [key: string]: string };
 };
+export type discoveryT = { [key: string]: { adresses: string[] } };
+
 export type pingT = { ping: "pong" };
 export type restartT = { ok: "restart" };

@@ -51,7 +51,6 @@ export class syncthing {
         args.push(`${encodeURI(arg)}=${encodeURI(_options.args[arg])}`);
     }
     const argsString = args.join("&");
-    console.log(argsString);
 
     const options: http.RequestOptions = {
       hostname: this._config.host,
@@ -68,18 +67,25 @@ export class syncthing {
       });
 
       res.on("end", () => {
-        let json: T;
-        if (!data.length) {
-          json = "empty response" as T;
-          cb(json);
-          return;
+        if (res.statusCode.toString()[0] == "2") {
+          //OK
+          if (!data.length) {
+            cb(null, new Error("empty response"));
+            return;
+          }
+          const contentType = res.headers["content-type"];
+          if (contentType.includes("json"))
+            try {
+              cb(JSON.parse(data));
+              return;
+            } catch (error) {
+              console.error(error);
+            }
+        } else {
+          console.log(res.statusCode);
+          console.log(res.statusMessage);
+          cb(null, new Error(data));
         }
-        try {
-          json = JSON.parse(data);
-        } catch (error) {
-          console.error(error);
-        }
-        cb(json);
       });
       res.on("error", (err) => {
         cb(null, err);
