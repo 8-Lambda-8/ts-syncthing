@@ -70,10 +70,6 @@ export class syncthing {
       res.on("end", () => {
         if (res.statusCode.toString()[0] == "2") {
           //OK
-          if (!data.length) {
-            cb(null, new Error("empty response"));
-            return;
-          }
           const contentType = res.headers["content-type"];
           if (contentType.includes("json"))
             try {
