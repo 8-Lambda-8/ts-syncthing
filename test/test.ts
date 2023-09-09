@@ -20,3 +20,9 @@ st.system.getDebug().then(console.log);
 
 st.system.setDebug([], ["api"], logThis);
 st.system.setDebug([], ["api"]).then(console.log);
+
+st.system.getDiscovery(logThis);
+st.system.getDiscovery().then(console.log);
+
+st.system.setDiscovery("XXXXXXX-JOAXZRU-JLATGU6-S664HNW-CYWMIQV-SI4DBBV-VLVUYC7-QDL6HAW","test",logThis,);
+st.system.setDiscovery("XXXXXXX-JOAXZRU-JLATGU6-S664HNW-CYWMIQV-SI4DBBV-VLVUYC7-QDL6HAW","tcp://10.0.0.69:420",).then(console.log);

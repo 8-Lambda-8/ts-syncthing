@@ -8,6 +8,7 @@ import {
   funOverT,
   connectionsT,
   debugT,
+  discoveryT,
 } from "./types";
 
 export class syncthing {
@@ -127,6 +128,27 @@ export class syncthing {
     )) as ((enable: string[], disable: string[]) => Promise<string>) &
     ((enable: string[], disable: string[], callback: cbT<string>) => void);
 
+  private system_getDiscovery = ((callback?: cbT<discoveryT>) =>
+    this.request(
+      { endpoint: "system/discovery" },
+      callback,
+    )) as funOverT<discoveryT>;
+
+  private system_setDiscovery = ((
+    device: string,
+    addr: string,
+    callback?: cbT<string>,
+  ) =>
+    this.request(
+      {
+        args: { device, addr },
+        endpoint: "system/discovery",
+        post: true,
+      },
+      callback,
+    )) as ((device: string, addr: string) => Promise<string>) &
+    ((device: string, addr: string, callback: cbT<string>) => void);
+
   private system_restart = ((callback?: cbT<restartT>) =>
     this.request(
       { endpoint: "system/browse" },
@@ -138,8 +160,8 @@ export class syncthing {
     connections: this.system_connections,
     getDebug: this.system_getDebug,
     setDebug: this.system_setDebug,
-    //getDiscovery:this.system_getDiscovery,
-    //setDiscovery:this.system_setDiscovery,
+    getDiscovery: this.system_getDiscovery,
+    setDiscovery: this.system_setDiscovery,
     //clearError:this.system_clearError,
     //getError:this.system_getError,
     //setError:this.system_setError,
