@@ -10,6 +10,7 @@ import {
   debugT,
   discoveryT,
   errorT,
+  logT,
 } from "./types";
 
 export class syncthing {
@@ -165,6 +166,24 @@ export class syncthing {
     )) as ((message: string) => Promise<string>) &
     ((message: string, callback: cbT<string>) => void);
 
+  private system_log = ((since?: Date, callback?: cbT<logT>) =>
+    this.request(
+      {
+        args: since ? { since: since.toISOString() } : {},
+        endpoint: "system/log",
+      },
+      callback,
+    )) as funOverT<logT>;
+
+  private system_log_txt = ((since?: Date, callback?: cbT<string>) =>
+    this.request(
+      {
+        args: since ? { since: since.toISOString() } : {},
+        endpoint: "system/log.txt",
+      },
+      callback,
+    )) as funOverT<string>;
+
   private system_restart = ((callback?: cbT<restartT>) =>
     this.request(
       { endpoint: "system/browse" },
@@ -181,8 +200,8 @@ export class syncthing {
     clearError: this.system_clearError,
     getError: this.system_getError,
     setError: this.system_setError,
-    //log:this.system_log,
-    //log_txt:this.system_log_txt,
+    log: this.system_log,
+    log_txt: this.system_log_txt,
     //paths:this.system_paths,
     //pause:this.system_pause,
     ping: this.system_ping,

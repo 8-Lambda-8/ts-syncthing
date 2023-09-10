@@ -39,8 +39,13 @@ export type debugT = {
   facilities: { [key: string]: string };
 };
 export type discoveryT = { [key: string]: { adresses: string[] } };
+
+type messageT = { when: string; message: string; level: number };
 export type errorT = {
-  errors: { when: string; message: string; level: number }[];
+  errors: messageT[];
+};
+export type logT = {
+  messages: messageT[];
 };
 
 export type pingT = { ping: "pong" };

@@ -28,3 +28,6 @@ st.system.getDiscovery().then(console.log);
 st.system.clearError(logThis);
 st.system.setError("MyTest Error", logThis);
 st.system.getError(logThis);
+
+st.system.log(logThis);
+st.system.log_txt(logThis);
