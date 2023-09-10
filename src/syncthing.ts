@@ -195,6 +195,17 @@ export class syncthing {
   private system_ping = ((callback?: cbT<pingT>) =>
     this.request({ endpoint: "system/ping" }, callback)) as funOverT<pingT>;
 
+  private system_reset = ((folder?: string, callback?: cbT<string>) =>
+    this.request(
+      {
+        args: folder ? { folder } : {},
+        endpoint: "system/reset",
+        post: true,
+      },
+      callback,
+    )) as ((folder: string) => Promise<string>) &
+    ((folder: string, callback: cbT<string>) => void);
+
   private system_restart = ((callback?: cbT<restartT>) =>
     this.request(
       { endpoint: "system/browse" },
@@ -215,7 +226,7 @@ export class syncthing {
     log_txt: this.system_log_txt,
     pause: this.system_pause,
     ping: this.system_ping,
-    //reset:this.system_reset,
+    reset: this.system_reset,
     restart: this.system_restart,
     //resume:this.system_resume,
     //shutdown:this.system_shutdown,
