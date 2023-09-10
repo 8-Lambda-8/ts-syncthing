@@ -86,3 +86,10 @@ export type upgradeT = {
   newer: boolean;
   running: string;
 };
+
+export type versionT = {
+  arch: string;
+  longVersion: string;
+  os: string;
+  version: string;
+};

@@ -49,3 +49,5 @@ st.system.status(logThis)
 
 st.system.upgradeCheck(logThis)
 st.system.upgradeDo(logThis)
+
+st.system.version

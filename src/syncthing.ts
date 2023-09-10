@@ -12,6 +12,7 @@ import {
   logT,
   statusT,
   upgradeT,
+  versionT,
 } from "./types";
 
 export class syncthing {
@@ -242,6 +243,9 @@ export class syncthing {
       callback,
     )) as funOverT<upgradeT>;
 
+  private system_version = ((callback?: cbT<versionT>) =>
+    this.request({ endpoint: "system/version" }, callback)) as funOverT<versionT>;
+
   public system = {
     browse: this.system_browse,
     connections: this.system_connections,
@@ -263,7 +267,7 @@ export class syncthing {
     status: this.system_status,
     upgradeCheck: this.system_upgradeCheck,
     upgradeDo: this.system_upgradeDo,
-    //version:this.system_version,
+    version:this.system_version,
   };
   public config = {
     //getConfig: this.config_config,
