@@ -44,3 +44,5 @@ st.system.resume(
 
 st.system.restart(logThis);
 st.system.shutdown(logThis);
+
+st.system.status(logThis)

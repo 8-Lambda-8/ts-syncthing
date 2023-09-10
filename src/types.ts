@@ -49,3 +49,33 @@ export type logT = {
 };
 
 export type pingT = { ping: "pong" };
+
+export type statusT = {
+  alloc: number;
+  connectionServiceStatus: {
+    [url: string]: {
+      error: null;
+      lanAddresses: string[];
+      wanAddresses: string[];
+    };
+  };
+  cpuPercent: number;
+  discoveryEnabled: boolean;
+  discoveryErrors: { [server: string]: string };
+  discoveryStatus: { [connection: string]: { error: null | string } };
+  discoveryMethods: number;
+  goroutines: number;
+  lastDialStatus: {
+    [connection: string]: {
+      when: string;
+      error: string;
+    };
+  };
+  myID: string;
+  pathSeparator: string;
+  startTime: string;
+  sys: number;
+  themes: string[];
+  tilde: string;
+  uptime: number;
+};

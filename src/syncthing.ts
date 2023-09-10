@@ -10,6 +10,7 @@ import {
   discoveryT,
   errorT,
   logT,
+  statusT,
 } from "./types";
 
 export class syncthing {
@@ -228,6 +229,9 @@ export class syncthing {
       callback,
     )) as funOverT<string>;
 
+  private system_status = ((callback?: cbT<statusT>) =>
+    this.request({ endpoint: "system/status" }, callback)) as funOverT<statusT>;
+
   public system = {
     browse: this.system_browse,
     connections: this.system_connections,
@@ -246,7 +250,7 @@ export class syncthing {
     restart: this.system_restart,
     resume: this.system_resume,
     shutdown: this.system_shutdown,
-    //status:this.system_status,
+    status: this.system_status,
     //upgradeCheck:this.system_upgradeCheck,
     //upgradeDo:this.system_upgradeDo,
     //version:this.system_version,
