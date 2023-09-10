@@ -31,3 +31,8 @@ st.system.getError(logThis);
 
 st.system.log(logThis);
 st.system.log_txt(logThis);
+
+st.system.pause(
+  "774737D-GH3FCHQ-TYZFXU5-O2YUYAQ-4NX5Z7O-TA42QY7-2XVO2JP-TM6HGQY",
+  logThis,
+);

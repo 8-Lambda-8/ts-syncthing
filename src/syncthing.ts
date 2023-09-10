@@ -184,6 +184,17 @@ export class syncthing {
       callback,
     )) as funOverT<string>;
 
+  private system_pause = ((device?: string, callback?: cbT<string>) =>
+    this.request(
+      {
+        args: device ? { device } : {},
+        endpoint: "system/pause",
+        post: true,
+      },
+      callback,
+    )) as ((device: string) => Promise<string>) &
+    ((device: string, callback: cbT<string>) => void);
+
   private system_restart = ((callback?: cbT<restartT>) =>
     this.request(
       { endpoint: "system/browse" },
@@ -202,8 +213,7 @@ export class syncthing {
     setError: this.system_setError,
     log: this.system_log,
     log_txt: this.system_log_txt,
-    //paths:this.system_paths,
-    //pause:this.system_pause,
+    pause: this.system_pause,
     ping: this.system_ping,
     //reset:this.system_reset,
     restart: this.system_restart,
