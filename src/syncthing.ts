@@ -222,6 +222,12 @@ export class syncthing {
     )) as ((device: string) => Promise<string>) &
     ((device: string, callback: cbT<string>) => void);
 
+  private system_shutdown = ((callback?: cbT<string>) =>
+    this.request(
+      { endpoint: "system/shutdown", post: true },
+      callback,
+    )) as funOverT<string>;
+
   public system = {
     browse: this.system_browse,
     connections: this.system_connections,
@@ -239,7 +245,7 @@ export class syncthing {
     reset: this.system_reset,
     restart: this.system_restart,
     resume: this.system_resume,
-    //shutdown:this.system_shutdown,
+    shutdown: this.system_shutdown,
     //status:this.system_status,
     //upgradeCheck:this.system_upgradeCheck,
     //upgradeDo:this.system_upgradeDo,

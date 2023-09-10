@@ -41,3 +41,6 @@ st.system.resume(
   "XXXXXXX-GH3FCHQ-TYZFXU5-O2YUYAQ-4NX5Z7O-TA42QY7-2XVO2JP-TM6HGQY",
   logThis,
 );
+
+st.system.restart(logThis);
+st.system.shutdown(logThis);
