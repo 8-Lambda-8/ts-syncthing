@@ -46,3 +46,6 @@ st.system.restart(logThis);
 st.system.shutdown(logThis);
 
 st.system.status(logThis)
+
+st.system.upgradeCheck(logThis)
+st.system.upgradeDo(logThis)

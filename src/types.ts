@@ -79,3 +79,10 @@ export type statusT = {
   tilde: string;
   uptime: number;
 };
+
+export type upgradeT = {
+  latest: string;
+  majorNewer: boolean;
+  newer: boolean;
+  running: string;
+};
