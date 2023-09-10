@@ -8,6 +8,7 @@ export type requestOptionsT = {
   endpoint: string;
   post?: boolean;
   args?: { [key: string]: string };
+  body?: string;
 };
 
 export type cbT<T> = (res: T, err?: Error) => void;
@@ -38,6 +39,9 @@ export type debugT = {
   facilities: { [key: string]: string };
 };
 export type discoveryT = { [key: string]: { adresses: string[] } };
+export type errorT = {
+  errors: { when: string; message: string; level: number }[];
+};
 
 export type pingT = { ping: "pong" };
 export type restartT = { ok: "restart" };

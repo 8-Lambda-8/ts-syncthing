@@ -9,6 +9,7 @@ import {
   connectionsT,
   debugT,
   discoveryT,
+  errorT,
 } from "./types";
 
 export class syncthing {
@@ -38,14 +39,7 @@ export class syncthing {
     }
   }
 
-  private req<T>(
-    _options: {
-      endpoint: string;
-      post?: boolean;
-      args?: { [key: string]: string };
-    },
-    cb: cbT<T>,
-  ): void {
+  private req<T>(_options: requestOptionsT, cb: cbT<T>): void {
     const args = [];
     for (const arg in _options.args) {
       if (_options.args[arg].length > 0)
@@ -61,7 +55,7 @@ export class syncthing {
     };
     options.headers = { "X-API-Key": this._config.apiKey };
 
-    http.get(options, (res) => {
+    const req = http.request(options, (res) => {
       let data = "";
       res.on("data", (chunk) => {
         data += chunk;
@@ -71,6 +65,7 @@ export class syncthing {
         if (res.statusCode.toString()[0] == "2") {
           //OK
           const contentType = res.headers["content-type"];
+          if (!contentType) return;
           if (contentType.includes("json"))
             try {
               cb(JSON.parse(data));
@@ -88,6 +83,8 @@ export class syncthing {
         cb(null, err);
       });
     });
+    if (_options.body) req.write(_options.body);
+    req.end();
   }
 
   private system_ping = ((callback?: cbT<pingT>) =>
@@ -145,6 +142,29 @@ export class syncthing {
     )) as ((device: string, addr: string) => Promise<string>) &
     ((device: string, addr: string, callback: cbT<string>) => void);
 
+  private system_clearError = ((callback?: cbT<string>) =>
+    this.request(
+      {
+        endpoint: "system/error/clear",
+        post: true,
+      },
+      callback,
+    )) as funOverT<string>;
+
+  private system_getError = ((callback?: cbT<errorT>) =>
+    this.request({ endpoint: "system/error" }, callback)) as funOverT<errorT>;
+
+  private system_setError = ((message: string, callback?: cbT<string>) =>
+    this.request(
+      {
+        endpoint: "system/error",
+        post: true,
+        body: message,
+      },
+      callback,
+    )) as ((message: string) => Promise<string>) &
+    ((message: string, callback: cbT<string>) => void);
+
   private system_restart = ((callback?: cbT<restartT>) =>
     this.request(
       { endpoint: "system/browse" },
@@ -158,9 +178,9 @@ export class syncthing {
     setDebug: this.system_setDebug,
     getDiscovery: this.system_getDiscovery,
     setDiscovery: this.system_setDiscovery,
-    //clearError:this.system_clearError,
-    //getError:this.system_getError,
-    //setError:this.system_setError,
+    clearError: this.system_clearError,
+    getError: this.system_getError,
+    setError: this.system_setError,
     //log:this.system_log,
     //log_txt:this.system_log_txt,
     //paths:this.system_paths,
