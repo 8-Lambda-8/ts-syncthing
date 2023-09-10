@@ -3,7 +3,6 @@ import {
   configT,
   cbT,
   pingT,
-  restartT,
   requestOptionsT,
   funOverT,
   connectionsT,
@@ -206,11 +205,11 @@ export class syncthing {
     )) as ((folder: string) => Promise<string>) &
     ((folder: string, callback: cbT<string>) => void);
 
-  private system_restart = ((callback?: cbT<restartT>) =>
+  private system_restart = ((callback?: cbT<string>) =>
     this.request(
-      { endpoint: "system/browse" },
+      { endpoint: "system/restart", post: true },
       callback,
-    )) as funOverT<restartT>;
+    )) as funOverT<string>;
 
   private system_resume = ((device?: string, callback?: cbT<string>) =>
     this.request(
