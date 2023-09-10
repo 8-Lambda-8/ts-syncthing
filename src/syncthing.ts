@@ -88,9 +88,6 @@ export class syncthing {
     req.end();
   }
 
-  private system_ping = ((callback?: cbT<pingT>) =>
-    this.request({ endpoint: "system/ping" }, callback)) as funOverT<pingT>;
-
   private system_browse = ((path: string, callback?: cbT<string[]>) =>
     this.request(
       { endpoint: "system/browse", args: { current: path } },
@@ -194,6 +191,9 @@ export class syncthing {
       callback,
     )) as ((device: string) => Promise<string>) &
     ((device: string, callback: cbT<string>) => void);
+
+  private system_ping = ((callback?: cbT<pingT>) =>
+    this.request({ endpoint: "system/ping" }, callback)) as funOverT<pingT>;
 
   private system_restart = ((callback?: cbT<restartT>) =>
     this.request(
