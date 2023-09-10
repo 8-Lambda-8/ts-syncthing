@@ -212,6 +212,17 @@ export class syncthing {
       callback,
     )) as funOverT<restartT>;
 
+  private system_resume = ((device?: string, callback?: cbT<string>) =>
+    this.request(
+      {
+        args: device ? { device } : {},
+        endpoint: "system/resume",
+        post: true,
+      },
+      callback,
+    )) as ((device: string) => Promise<string>) &
+    ((device: string, callback: cbT<string>) => void);
+
   public system = {
     browse: this.system_browse,
     connections: this.system_connections,
@@ -228,7 +239,7 @@ export class syncthing {
     ping: this.system_ping,
     reset: this.system_reset,
     restart: this.system_restart,
-    //resume:this.system_resume,
+    resume: this.system_resume,
     //shutdown:this.system_shutdown,
     //status:this.system_status,
     //upgradeCheck:this.system_upgradeCheck,
