@@ -13,6 +13,7 @@ import {
   statusT,
   upgradeT,
   versionT,
+  getConfigT,
 } from "./types";
 
 export class syncthing {
@@ -89,6 +90,11 @@ export class syncthing {
     if (_options.body) req.write(_options.body);
     req.end();
   }
+
+  /**
+   * System Endpoints:
+   *
+   * */
 
   private system_browse = ((path: string, callback?: cbT<string[]>) =>
     this.request(
@@ -244,7 +250,18 @@ export class syncthing {
     )) as funOverT<upgradeT>;
 
   private system_version = ((callback?: cbT<versionT>) =>
-    this.request({ endpoint: "system/version" }, callback)) as funOverT<versionT>;
+    this.request(
+      { endpoint: "system/version" },
+      callback,
+    )) as funOverT<versionT>;
+
+  /**
+   * Config Endpoints:
+   *
+   * */
+
+  private config_config = ((callback?: cbT<getConfigT>) =>
+    this.request({ endpoint: "config" }, callback)) as funOverT<getConfigT>;
 
   public system = {
     browse: this.system_browse,
@@ -267,10 +284,10 @@ export class syncthing {
     status: this.system_status,
     upgradeCheck: this.system_upgradeCheck,
     upgradeDo: this.system_upgradeDo,
-    version:this.system_version,
+    version: this.system_version,
   };
   public config = {
-    //getConfig: this.config_config,
+    getConfig: this.config_config,
     //restartRequired: this.config_restartRequired,
     //folders: this.config_folders,
     //devices: this.config_devices,

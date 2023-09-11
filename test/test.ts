@@ -51,3 +51,5 @@ st.system.upgradeCheck(logThis)
 st.system.upgradeDo(logThis)
 
 st.system.version
+
+st.config.getConfig(logThis);
