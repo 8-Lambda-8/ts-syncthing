@@ -60,3 +60,5 @@ st.db.completion(
   logThis,
 );
 st.db.completion({ folder: "XXXXX-kvyer" });
+
+st.noauth.health(logThis);

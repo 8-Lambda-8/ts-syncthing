@@ -268,7 +268,7 @@ export class syncthing {
    * DB Endpoints:
    *
    * */
-  
+
   private db_completion = ((
     of?: { device?: string; folder?: string },
     callback?: cbT<completionT>,
@@ -288,6 +288,16 @@ export class syncthing {
       callback: cbT<completionT>,
     ) => void) &
     ((callback: cbT<completionT>) => void);
+
+  /**
+   * Noauth Endpoints:
+   *
+   * */
+
+  private noauth_health = ((callback?: cbT<{ status: "OK" }>) =>
+    this.request({ endpoint: "noauth/health" }, callback)) as funOverT<{
+    status: "OK";
+  }>;
 
   public system = {
     browse: this.system_browse,
@@ -372,6 +382,6 @@ export class syncthing {
     //file: this.debug_file,
   };
   public noauth = {
-    //health: this.noauth_health,
+    health: this.noauth_health,
   };
 }
