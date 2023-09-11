@@ -229,3 +229,14 @@ export type getConfigT = {
   };
   remoteIgnoredDevices: [];
 };
+
+export type completionT = {
+  completion: number;
+  globalBytes: number;
+  needBytes: number;
+  globalItems: number;
+  needItems: number;
+  needDeletes: number;
+  remoteState: "valid" | "paused" | "notSharing" | "unknown";
+  sequence: number;
+};

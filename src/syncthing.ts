@@ -14,6 +14,7 @@ import {
   upgradeT,
   versionT,
   getConfigT,
+  completionT,
 } from "./types";
 
 export class syncthing {
@@ -263,6 +264,31 @@ export class syncthing {
   private config_config = ((callback?: cbT<getConfigT>) =>
     this.request({ endpoint: "config" }, callback)) as funOverT<getConfigT>;
 
+  /**
+   * DB Endpoints:
+   *
+   * */
+  
+  private db_completion = ((
+    of?: { device?: string; folder?: string },
+    callback?: cbT<completionT>,
+  ) =>
+    this.request(
+      {
+        args: of,
+        endpoint: "db/completion",
+      },
+      callback,
+    )) as ((of?: {
+    device?: string;
+    folder?: string;
+  }) => Promise<completionT>) &
+    ((
+      of: { device?: string; folder?: string },
+      callback: cbT<completionT>,
+    ) => void) &
+    ((callback: cbT<completionT>) => void);
+
   public system = {
     browse: this.system_browse,
     connections: this.system_connections,
@@ -310,7 +336,7 @@ export class syncthing {
   };
   public db = {
     //browse: this.db_browse,
-    //completion: this.db_completion,
+    completion: this.db_completion,
     //file: this.db_file,
     //getIgnores: this.db_getIgnores,
     //setIgnores: this.db_setIgnores,
