@@ -64,3 +64,4 @@ st.db.completion({ folder: "XXXXX-kvyer" });
 st.noauth.health(logThis);
 
 st.stats.device(logThis);
+st.stats.folder(logThis);

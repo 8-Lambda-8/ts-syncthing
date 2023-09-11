@@ -249,3 +249,13 @@ export type deviceStatsT = {
     lastConnectionDurationS: number;
   };
 };
+
+export type folderStatsT = {
+  [id: string]: {
+    lastScan: string; //ISO Date string
+    lastFile: {
+      filename: string;
+      at: string; //ISO Date string
+    };
+  };
+};

@@ -16,6 +16,7 @@ import {
   getConfigT,
   completionT,
   deviceStatsT,
+  folderStatsT,
 } from "./types";
 
 export class syncthing {
@@ -301,6 +302,12 @@ export class syncthing {
       callback,
     )) as funOverT<deviceStatsT>;
 
+  private stats_folder = ((callback?: cbT<folderStatsT>) =>
+    this.request(
+      { endpoint: "stats/folder" },
+      callback,
+    )) as funOverT<folderStatsT>;
+
   /**
    * Noauth Endpoints:
    *
@@ -377,7 +384,7 @@ export class syncthing {
   };
   public stats = {
     device: this.stats_device,
-    //folder: this.stats_folder,
+    folder: this.stats_folder,
   };
   public svc = {
     //deviceId: this.svc_deviceId,
