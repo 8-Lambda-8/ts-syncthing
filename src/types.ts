@@ -1,3 +1,5 @@
+import { type } from "os";
+
 export type configT = {
   host?: string;
   port?: number;
@@ -239,4 +241,11 @@ export type completionT = {
   needDeletes: number;
   remoteState: "valid" | "paused" | "notSharing" | "unknown";
   sequence: number;
+};
+
+export type deviceStatsT = {
+  [id: string]: {
+    lastSeen: string; //ISO Date string
+    lastConnectionDurationS: number;
+  };
 };
