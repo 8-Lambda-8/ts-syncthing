@@ -317,7 +317,7 @@ export class syncthing {
         endpoint: "db/completion",
       },
       callback,
-    )) as ((of?: {
+    )) as ((of: {
     device?: string;
     folder?: string;
   }) => Promise<completionT>) &
@@ -325,6 +325,7 @@ export class syncthing {
       of: { device?: string; folder?: string },
       callback: cbT<completionT>,
     ) => void) &
+    (() => Promise<completionT>) &
     ((callback: cbT<completionT>) => void);
 
   /**
