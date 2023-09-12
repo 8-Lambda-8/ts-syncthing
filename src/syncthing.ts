@@ -266,6 +266,14 @@ export class syncthing {
   private config_config = ((callback?: cbT<getConfigT>) =>
     this.request({ endpoint: "config" }, callback)) as funOverT<getConfigT>;
 
+  private config_restartRequired = ((
+    callback?: cbT<{ requiresRestart: false }>,
+  ) =>
+    this.request(
+      { endpoint: "config/restart-required" },
+      callback,
+    )) as funOverT<{ requiresRestart: false }>;
+
   /**
    * DB Endpoints:
    *
@@ -343,7 +351,7 @@ export class syncthing {
   };
   public config = {
     getConfig: this.config_config,
-    //restartRequired: this.config_restartRequired,
+    restartRequired: this.config_restartRequired,
     //folders: this.config_folders,
     //devices: this.config_devices,
     //folder: this.config_folder,

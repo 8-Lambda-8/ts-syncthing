@@ -54,6 +54,8 @@ st.system.version
 
 st.config.getConfig(logThis);
 
+st.config.restartRequired(logThis);
+
 st.db.completion({}, logThis);
 st.db.completion(
   { device: "XXXXXXX-JOAXZRU-JLATGU6-S664HNW-CYWMIQV-SI4DBBV-VLVUYC7-QDL6HAW" },
