@@ -277,16 +277,26 @@ export class syncthing {
     )) as funOverT<{ requiresRestart: false }>;
 
   private config_folders = ((callback?: cbT<folderT[]>) =>
-    this.request(
-      { endpoint: "config/folders" },
-      callback,
-    )) as funOverT<folderT[]>;
+    this.request({ endpoint: "config/folders" }, callback)) as funOverT<
+    folderT[]
+  >;
 
   private config_devices = ((callback?: cbT<deviceT[]>) =>
-    this.request(
-      { endpoint: "config/devices" },
-      callback,
-    )) as funOverT<deviceT[]>;
+    this.request({ endpoint: "config/devices" }, callback)) as funOverT<
+    deviceT[]
+  >;
+
+  private config_getFolder = ((id: string, callback?: cbT<folderT[]>) =>
+    this.request({ endpoint: "config/folders/" + id }, callback)) as ((
+    id: string,
+  ) => Promise<folderT>) &
+    ((id: string, callback: cbT<folderT>) => void);
+
+  private config_getDevice = ((id: string, callback?: cbT<deviceT[]>) =>
+    this.request({ endpoint: "config/devices/" + id }, callback)) as ((
+    id: string,
+  ) => Promise<deviceT>) &
+    ((id: string, callback: cbT<deviceT>) => void);
 
   /**
    * DB Endpoints:
@@ -368,8 +378,8 @@ export class syncthing {
     restartRequired: this.config_restartRequired,
     folders: this.config_folders,
     devices: this.config_devices,
-    //folder: this.config_folder,
-    //device: this.config_device,
+    getFolder: this.config_getFolder,
+    getDevice: this.config_getDevice,
     //options: this.config_options,
     //ldap: this.config_ldap,
     //gui: this.config_gui,

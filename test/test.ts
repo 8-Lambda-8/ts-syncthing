@@ -58,6 +58,11 @@ st.config.restartRequired(logThis);
 st.config.folders(logThis)
 st.config.devices(logThis);
 
+st.config.getFolder("XXXXX-kvyer", logThis);
+st.config.getDevice(
+  "XXXXXXX-JOAXZRU-JLATGU6-S664HNW-CYWMIQV-SI4DBBV-VLVUYC7-QDL6HAW",
+  logThis,
+);
 
 st.db.completion({}, logThis);
 st.db.completion(
