@@ -1,9 +1,8 @@
-import { type } from "os";
-
 export type configT = {
   host?: string;
   port?: number;
   apiKey: string;
+  https?: boolean;
 };
 
 export type requestOptionsT = {

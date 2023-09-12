@@ -29,6 +29,7 @@ export class syncthing {
       host: config.host || "127.0.0.1",
       port: 8384,
       apiKey: undefined,
+      https: false,
       ...config,
     };
   }
@@ -48,13 +49,15 @@ export class syncthing {
     }
   }
 
-  private req<T>(_options: requestOptionsT, cb: cbT<T>): void {
+  private async req<T>(_options: requestOptionsT, cb: cbT<T>): Promise<void> {
     const args = [];
     for (const arg in _options.args) {
       if (_options.args[arg].length > 0)
         args.push(`${encodeURI(arg)}=${encodeURI(_options.args[arg])}`);
     }
     const argsString = args.join("&");
+
+    const protocol = await import(this._config.https ? "https" : "http");
 
     const options: http.RequestOptions = {
       hostname: this._config.host,
@@ -64,7 +67,7 @@ export class syncthing {
     };
     options.headers = { "X-API-Key": this._config.apiKey };
 
-    const req = http.request(options, (res) => {
+    const req = protocol.request(options, (res) => {
       let data = "";
       res.on("data", (chunk) => {
         data += chunk;
