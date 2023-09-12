@@ -17,6 +17,8 @@ import {
   completionT,
   deviceStatsT,
   folderStatsT,
+  folderT,
+  deviceT,
 } from "./types";
 
 export class syncthing {
@@ -274,6 +276,18 @@ export class syncthing {
       callback,
     )) as funOverT<{ requiresRestart: false }>;
 
+  private config_folders = ((callback?: cbT<folderT[]>) =>
+    this.request(
+      { endpoint: "config/folders" },
+      callback,
+    )) as funOverT<folderT[]>;
+
+  private config_devices = ((callback?: cbT<deviceT[]>) =>
+    this.request(
+      { endpoint: "config/devices" },
+      callback,
+    )) as funOverT<deviceT[]>;
+
   /**
    * DB Endpoints:
    *
@@ -352,8 +366,8 @@ export class syncthing {
   public config = {
     getConfig: this.config_config,
     restartRequired: this.config_restartRequired,
-    //folders: this.config_folders,
-    //devices: this.config_devices,
+    folders: this.config_folders,
+    devices: this.config_devices,
     //folder: this.config_folder,
     //device: this.config_device,
     //options: this.config_options,

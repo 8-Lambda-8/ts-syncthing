@@ -24,7 +24,6 @@ st.system.setDebug([], ["api"]).then(console.log);
 st.system.getDiscovery(logThis);
 st.system.getDiscovery().then(console.log);
 
-
 st.system.clearError(logThis);
 st.system.setError("MyTest Error", logThis);
 st.system.getError(logThis);
@@ -45,16 +44,20 @@ st.system.resume(
 st.system.restart(logThis);
 st.system.shutdown(logThis);
 
-st.system.status(logThis)
+st.system.status(logThis);
 
-st.system.upgradeCheck(logThis)
-st.system.upgradeDo(logThis)
+st.system.upgradeCheck(logThis);
+st.system.upgradeDo(logThis);
 
-st.system.version
+st.system.version(logThis);
 
 st.config.getConfig(logThis);
 
 st.config.restartRequired(logThis);
+
+st.config.folders(logThis)
+st.config.devices(logThis);
+
 
 st.db.completion({}, logThis);
 st.db.completion(

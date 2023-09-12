@@ -96,63 +96,81 @@ export type versionT = {
   version: string;
 };
 
-export type getConfigT = {
-  version: number;
-  folders: {
-    id: string;
-    label: string;
-    filesystemType: string;
-    path: "/home/jakob/Dev";
-    type: "sendonly";
-    devices: string[];
-    rescanIntervalS: number;
-    fsWatcherEnabled: boolean;
-    fsWatcherDelayS: number;
-    ignorePerms: boolean;
-    autoNormalize: boolean;
-    minDiskFree: unknown; //fix this
-    versioning: unknown; //fix this
-    copiers: number;
-    pullerMaxPendingKiB: number;
-    hashers: number;
-    order: "random" | string;
-    ignoreDelete: boolean;
-    scanProgressIntervalS: number;
-    pullerPauseS: number;
-    maxConflicts: number;
-    disableSparseFiles: boolean;
-    disableTempIndexes: boolean;
-    paused: boolean;
-    weakHashThresholdPct: number;
-    markerName: ".stfolder" | string;
-    copyOwnershipFromParent: boolean;
-    modTimeWindowS: number;
-    maxConcurrentWrites: number;
-    disableFsync: boolean;
-    blockPullOrder: string;
-    copyRangeMethod: string;
-    caseSensitiveFS: boolean;
-    junctionsAsDirs: boolean;
-  }[];
+export type folderT = {
+  id: string;
+  label: string;
+  filesystemType: string;
+  path: string;
+  type: string;
   devices: {
     deviceID: string;
-    name: string;
-    addresses: string[];
-    compression: string;
-    certName: string;
-    introducer: boolean;
-    skipIntroductionRemovals: boolean;
     introducedBy: string;
-    paused: boolean;
-    allowedNetworks: string[];
-    autoAcceptFolders: boolean;
-    maxSendKbps: number;
-    maxRecvKbps: number;
-    ignoredFolders: string[];
-    maxRequestKiB: number;
-    untrusted: boolean;
-    remoteGUIPort: number;
+    encryptionPassword: string;
   }[];
+  rescanIntervalS: number;
+  fsWatcherEnabled: boolean;
+  fsWatcherDelayS: number;
+  ignorePerms: boolean;
+  autoNormalize: boolean;
+  minDiskFree: { value: number; unit: string };
+  versioning: {
+    type: string;
+    params: unknown; //fix this
+    cleanupIntervalS: number;
+    fsPath: string;
+    fsType: string;
+  };
+  copiers: number;
+  pullerMaxPendingKiB: number;
+  hashers: number;
+  order: number;
+  ignoreDelete: boolean;
+  scanProgressIntervalS: number;
+  pullerPauseS: number;
+  maxConflicts: number;
+  disableSparseFiles: boolean;
+  disableTempIndexes: boolean;
+  paused: boolean;
+  weakHashThresholdPct: number;
+  markerName: string;
+  copyOwnershipFromParent: boolean;
+  modTimeWindowS: number;
+  maxConcurrentWrites: number;
+  disableFsync: boolean;
+  blockPullOrder: string;
+  copyRangeMethod: string;
+  caseSensitiveFS: boolean;
+  junctionsAsDirs: boolean;
+};
+
+export type deviceT = {
+  deviceID: string;
+  name: string;
+  addresses: string[];
+  compression: string;
+  certName: string;
+  introducer: boolean;
+  skipIntroductionRemovals: boolean;
+  introducedBy: string;
+  paused: boolean;
+  allowedNetworks: string[];
+  autoAcceptFolders: boolean;
+  maxSendKbps: number;
+  maxRecvKbps: number;
+  ignoredFolders: {
+    time: string; //ISO Date string
+    id: string;
+    label: string;
+  }[];
+  maxRequestKiB: number;
+  untrusted: boolean;
+  remoteGUIPort: number;
+};
+
+export type getConfigT = {
+  version: number;
+  folders: folderT[];
+  devices: deviceT[];
   gui: {
     enabled: boolean;
     address: string;
@@ -179,17 +197,17 @@ export type getConfigT = {
   options: {
     listenAddresses: string[];
     globalAnnounceServers: string[];
-    globalAnnounceEnabled: true;
-    localAnnounceEnabled: true;
+    globalAnnounceEnabled: boolean;
+    localAnnounceEnabled: boolean;
     localAnnouncePort: number;
     localAnnounceMCAddr: string;
     maxSendKbps: number;
     maxRecvKbps: number;
     reconnectionIntervalS: number;
-    relaysEnabled: true;
+    relaysEnabled: boolean;
     relayReconnectIntervalM: number;
-    startBrowser: true;
-    natEnabled: true;
+    startBrowser: boolean;
+    natEnabled: boolean;
     natLeaseMinutes: number;
     natRenewalMinutes: number;
     natTimeoutSeconds: number;
@@ -199,7 +217,7 @@ export type getConfigT = {
     urURL: string;
     urPostInsecurely: boolean;
     urInitialDelayS: number;
-    restartOnWakeup: true;
+    restartOnWakeup: boolean;
     autoUpgradeIntervalH: number;
     upgradeToPreReleases: boolean;
     keepTemporariesH: number;
@@ -213,16 +231,16 @@ export type getConfigT = {
     tempIndexMinBlocks: number;
     unackedNotificationIDs: [];
     trafficClass: number;
-    setLowPriority: true;
+    setLowPriority: boolean;
     maxFolderConcurrency: number;
     crURL: string;
-    crashReportingEnabled: true;
+    crashReportingEnabled: boolean;
     stunKeepaliveStartS: number;
     stunKeepaliveMinS: number;
     stunServers: string[];
     databaseTuning: string;
     maxConcurrentIncomingRequestKiB: number;
-    announceLANAddresses: true;
+    announceLANAddresses: boolean;
     sendFullIndexOnUpgrade: boolean;
     featureFlags: [];
     connectionLimitEnough: 0;
