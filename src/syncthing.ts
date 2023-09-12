@@ -64,7 +64,7 @@ export class syncthing {
       hostname: this._config.host,
       port: this._config.port,
       path: `${this._config.path}/rest/${_options.endpoint}?${argsString}`,
-      method: _options.post ? "POST" : "GET",
+      method: _options.method,
     };
     options.headers = { "X-API-Key": this._config.apiKey };
 
@@ -130,7 +130,7 @@ export class syncthing {
       {
         args: { enable: enable.join(","), disable: disable.join(",") },
         endpoint: "system/debug",
-        post: true,
+        method: "POST",
       },
       callback,
     )) as ((enable: string[], disable: string[]) => Promise<string>) &
@@ -151,7 +151,7 @@ export class syncthing {
       {
         args: { device, addr },
         endpoint: "system/discovery",
-        post: true,
+        method: "POST",
       },
       callback,
     )) as ((device: string, addr: string) => Promise<string>) &
@@ -161,7 +161,7 @@ export class syncthing {
     this.request(
       {
         endpoint: "system/error/clear",
-        post: true,
+        method: "POST",
       },
       callback,
     )) as funOverT<string>;
@@ -173,7 +173,7 @@ export class syncthing {
     this.request(
       {
         endpoint: "system/error",
-        post: true,
+        method: "POST",
         body: message,
       },
       callback,
@@ -203,7 +203,7 @@ export class syncthing {
       {
         args: device ? { device } : {},
         endpoint: "system/pause",
-        post: true,
+        method: "POST",
       },
       callback,
     )) as ((device: string) => Promise<string>) &
@@ -217,7 +217,7 @@ export class syncthing {
       {
         args: folder ? { folder } : {},
         endpoint: "system/reset",
-        post: true,
+        method: "POST",
       },
       callback,
     )) as ((folder: string) => Promise<string>) &
@@ -225,7 +225,7 @@ export class syncthing {
 
   private system_restart = ((callback?: cbT<string>) =>
     this.request(
-      { endpoint: "system/restart", post: true },
+      { endpoint: "system/restart", method: "POST" },
       callback,
     )) as funOverT<string>;
 
@@ -234,7 +234,7 @@ export class syncthing {
       {
         args: device ? { device } : {},
         endpoint: "system/resume",
-        post: true,
+        method: "POST",
       },
       callback,
     )) as ((device: string) => Promise<string>) &
@@ -242,7 +242,7 @@ export class syncthing {
 
   private system_shutdown = ((callback?: cbT<string>) =>
     this.request(
-      { endpoint: "system/shutdown", post: true },
+      { endpoint: "system/shutdown", method: "POST" },
       callback,
     )) as funOverT<string>;
 
@@ -254,7 +254,7 @@ export class syncthing {
 
   private system_upgradeDo = ((callback?: cbT<upgradeT>) =>
     this.request(
-      { endpoint: "system/upgrade", post: true },
+      { endpoint: "system/upgrade", method: "POST" },
       callback,
     )) as funOverT<upgradeT>;
 
@@ -290,17 +290,24 @@ export class syncthing {
     deviceT[]
   >;
 
-  private config_getFolder = ((id: string, callback?: cbT<folderT[]>) =>
+  private config_getFolder = ((id: string, callback?: cbT<folderT>) =>
     this.request({ endpoint: "config/folders/" + id }, callback)) as ((
     id: string,
   ) => Promise<folderT>) &
     ((id: string, callback: cbT<folderT>) => void);
 
-  private config_getDevice = ((id: string, callback?: cbT<deviceT[]>) =>
+  private config_getDevice = ((id: string, callback?: cbT<deviceT>) =>
     this.request({ endpoint: "config/devices/" + id }, callback)) as ((
     id: string,
   ) => Promise<deviceT>) &
     ((id: string, callback: cbT<deviceT>) => void);
+
+  private config_deleteDevice = ((id: string, callback?: cbT<string>) =>
+    this.request(
+      { endpoint: "config/devices/" + id, method: "DELETE" },
+      callback,
+    )) as ((id: string) => Promise<string>) &
+    ((id: string, callback: cbT<string>) => void);
 
   /**
    * DB Endpoints:
@@ -317,10 +324,7 @@ export class syncthing {
         endpoint: "db/completion",
       },
       callback,
-    )) as ((of: {
-    device?: string;
-    folder?: string;
-  }) => Promise<completionT>) &
+    )) as ((of: { device?: string; folder?: string }) => Promise<completionT>) &
     ((
       of: { device?: string; folder?: string },
       callback: cbT<completionT>,
@@ -385,6 +389,8 @@ export class syncthing {
     devices: this.config_devices,
     getFolder: this.config_getFolder,
     getDevice: this.config_getDevice,
+    //deleteFolder: this.config_deleteFolder,
+    deleteDevice: this.config_deleteDevice,
     //options: this.config_options,
     //ldap: this.config_ldap,
     //gui: this.config_gui,

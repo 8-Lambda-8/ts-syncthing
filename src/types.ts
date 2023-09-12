@@ -8,7 +8,7 @@ export type configT = {
 
 export type requestOptionsT = {
   endpoint: string;
-  post?: boolean;
+  method?: "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
   args?: { [key: string]: string };
   body?: string;
 };
