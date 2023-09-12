@@ -1,5 +1,6 @@
 export type configT = {
   host?: string;
+  path?: string;
   port?: number;
   apiKey: string;
   https?: boolean;

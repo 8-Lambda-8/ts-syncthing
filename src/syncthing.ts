@@ -27,6 +27,7 @@ export class syncthing {
   public constructor(config: configT) {
     this._config = {
       host: config.host || "127.0.0.1",
+      path: config.path || "",
       port: 8384,
       apiKey: undefined,
       https: false,
@@ -62,7 +63,7 @@ export class syncthing {
     const options: http.RequestOptions = {
       hostname: this._config.host,
       port: this._config.port,
-      path: `/rest/${_options.endpoint}?${argsString}`,
+      path: `${this._config.path}/rest/${_options.endpoint}?${argsString}`,
       method: _options.post ? "POST" : "GET",
     };
     options.headers = { "X-API-Key": this._config.apiKey };
