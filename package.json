@@ -1,8 +1,9 @@
 {
   "name": "ts-syncthing",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "syncthing rest api with typescript",
-  "main": "./build/syncthing.js",
+  "main": "build/src/syncthing.js",
+  "types": "build/src/syncthing.d.ts",
   "scripts": {
     "build": "tsc",
     "build:watch": "tsc --watch",
