@@ -89,12 +89,10 @@ export class syncthing {
               cb(JSON.parse(data));
               return;
             } catch (error) {
-              console.error(error);
+              cb(null, error);
             }
         } else {
-          console.log(res.statusCode);
-          console.log(res.statusMessage);
-          cb(null, new Error(data));
+          cb(null, new Error(res.statusCode + ": " + res.statusMessage));
         }
       });
       res.on("error", (err) => {
