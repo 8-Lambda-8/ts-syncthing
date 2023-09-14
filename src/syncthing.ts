@@ -26,8 +26,8 @@ export class syncthing {
 
   public constructor(config: configT) {
     this._config = {
-      host: config.host || "127.0.0.1",
-      path: config.path || "",
+      host: "127.0.0.1",
+      path: "",
       port: 8384,
       apiKey: undefined,
       https: false,
