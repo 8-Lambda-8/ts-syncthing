@@ -1,6 +1,6 @@
 {
   "name": "ts-syncthing",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "syncthing rest api with typescript",
   "main": "build/src/syncthing.js",
   "types": "build/src/syncthing.d.ts",
@@ -24,12 +24,11 @@
     "eslint": "^8.48.0",
     "eslint-config-prettier": "^9.0.0",
     "ts-node": "^10.9.1",
-    "typescript": "^5.2.2"
-  },
-  "dependencies": {
+    "typescript": "^5.2.2",
     "eslint-plugin-prettier": "^5.0.0",
     "prettier": "^3.0.3"
   },
+  "dependencies": {},
   "prettier": {
     "trailingComma": "all"
   }
