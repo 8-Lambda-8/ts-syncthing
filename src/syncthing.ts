@@ -26,6 +26,8 @@ export class syncthing {
 
   public label = "";
 
+  public constructor(config: configT);
+  public constructor(config: configT, label: string);
   public constructor(config: configT, label?: string) {
     this._config = {
       host: "127.0.0.1",
