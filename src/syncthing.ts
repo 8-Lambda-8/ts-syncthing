@@ -50,7 +50,7 @@ export class syncthing {
     }
   }
 
-  private async req<T>(_options: requestOptionsT, cb: cbT<T>): Promise<void> {
+  private async req<T>(_options: requestOptionsT, cb: cbT<T>) {
     const args = [];
     for (const arg in _options.args) {
       if (_options.args[arg].length > 0)
@@ -68,7 +68,7 @@ export class syncthing {
     };
     options.headers = { "X-API-Key": this._config.apiKey };
 
-    const req = protocol.request(options, (res) => {
+    const req = protocol.request(options, (res: http.IncomingMessage) => {
       let data = "";
       res.on("data", (chunk) => {
         data += chunk;
