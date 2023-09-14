@@ -24,7 +24,9 @@ import {
 export class syncthing {
   private _config: configT;
 
-  public constructor(config: configT) {
+  public label = "";
+
+  public constructor(config: configT, label?: string) {
     this._config = {
       host: "127.0.0.1",
       path: "",
@@ -33,6 +35,7 @@ export class syncthing {
       https: false,
       ...config,
     };
+    this.label = label;
   }
 
   private request<T>(options: requestOptionsT): Promise<T>;
