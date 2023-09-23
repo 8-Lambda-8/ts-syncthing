@@ -17,5 +17,5 @@
     "resolveJsonModule": true
   },
   "include": ["src", "test"],
-  "exclude": ["dist", "test/browser"]
+  "exclude": ["build"]
 }
