@@ -111,6 +111,7 @@ export class syncthing {
       cb(null, Error("TIMEOUT"));
       req.destroy();
     });
+    req.on("error", console.error);
 
     if (_options.body) req.write(_options.body);
     req.end();
