@@ -19,6 +19,8 @@ import {
   folderStatsT,
   folderT,
   deviceT,
+  pendingDevicesT,
+  pendingFoldersT,
 } from "./types";
 
 export class syncthing {
@@ -92,7 +94,10 @@ export class syncthing {
               cb(null, error);
             }
         } else {
-          cb(null, new Error(res.statusCode + ": " + res.statusMessage));
+          cb(
+            null,
+            new Error(res.statusCode + ": " + res.statusMessage + "   " + data),
+          );
         }
       });
       res.on("error", (err) => {
@@ -313,6 +318,23 @@ export class syncthing {
     ((id: string, callback: cbT<string>) => void);
 
   /**
+   * Cluster Endpoints:
+   *
+   * */
+
+  private cluster_getPendingDevices = ((callback?: cbT<pendingDevicesT>) =>
+    this.request(
+      { endpoint: "cluster/pending/devices" },
+      callback,
+    )) as funOverT<pendingDevicesT>;
+
+  private cluster_getPendingFolders = ((callback?: cbT<pendingFoldersT>) =>
+    this.request(
+      { endpoint: "cluster/pending/folders" },
+      callback,
+    )) as funOverT<pendingFoldersT>;
+
+  /**
    * DB Endpoints:
    *
    * */
@@ -399,9 +421,9 @@ export class syncthing {
     //gui: this.config_gui,
   };
   public cluster = {
-    //getPendingDevices: this.cluster_getPendingDevices,
+    getPendingDevices: this.cluster_getPendingDevices,
     //deletePendingDevices: this.cluster_deletePendingDevices,
-    //getPendingFolders: this.cluster_getPendingFolders,
+    getPendingFolders: this.cluster_getPendingFolders,
     //deletePendingFolders: this.cluster_deletePendingFolders,
   };
   public folder = {

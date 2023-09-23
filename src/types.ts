@@ -250,6 +250,27 @@ export type getConfigT = {
   remoteIgnoredDevices: [];
 };
 
+export type pendingDevicesT = {
+  [deviceId: string]: {
+    time: string;
+    name: string;
+    aadress: string;
+  };
+};
+
+export type pendingFoldersT = {
+  [folderId: string]: {
+    offeredBy: {
+      [deviceId: string]: {
+        time: string;
+        label: string;
+        receiveEncrypted: boolean;
+        remoteEncrypted: boolean;
+      };
+    };
+  };
+};
+
 export type completionT = {
   completion: number;
   globalBytes: number;
