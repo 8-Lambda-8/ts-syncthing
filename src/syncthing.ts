@@ -37,6 +37,7 @@ export class syncthing {
       port: 8384,
       apiKey: undefined,
       https: false,
+      timeout: 10_000,
       ...config,
     };
     this.label = label;
@@ -72,6 +73,7 @@ export class syncthing {
       port: this._config.port,
       path: `${this._config.path}/rest/${_options.endpoint}?${argsString}`,
       method: _options.method,
+      timeout: this._config.timeout,
     };
     options.headers = { "X-API-Key": this._config.apiKey };
 
@@ -103,7 +105,13 @@ export class syncthing {
       res.on("error", (err) => {
         cb(null, err);
       });
+    }) as http.ClientRequest;
+
+    req.on("timeout", () => {
+      cb(null, Error("TIMEOUT"));
+      req.destroy();
     });
+
     if (_options.body) req.write(_options.body);
     req.end();
   }

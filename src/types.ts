@@ -4,6 +4,7 @@ export type configT = {
   port?: number;
   apiKey: string;
   https?: boolean;
+  timeout: number
 };
 
 export type requestOptionsT = {
