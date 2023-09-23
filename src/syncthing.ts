@@ -328,11 +328,42 @@ export class syncthing {
       callback,
     )) as funOverT<pendingDevicesT>;
 
+  private cluster_deletePendingDevices = ((
+    id: string,
+    callback?: cbT<pendingDevicesT>,
+  ) =>
+    this.request(
+      {
+        endpoint: "cluster/pending/devices",
+        args: { device: id },
+        method: "DELETE",
+      },
+      callback,
+    )) as ((id: string) => Promise<string>) &
+    ((id: string, callback: cbT<string>) => void);
+
   private cluster_getPendingFolders = ((callback?: cbT<pendingFoldersT>) =>
     this.request(
       { endpoint: "cluster/pending/folders" },
       callback,
     )) as funOverT<pendingFoldersT>;
+
+  private cluster_deletePendingFolders = ((
+    folderId: string,
+    deviceId?: string,
+    callback?: cbT<pendingFoldersT>,
+  ) =>
+    this.request(
+      {
+        endpoint: "cluster/pending/folders",
+        args: { folder: folderId, device: deviceId },
+        method: "DELETE",
+      },
+      callback,
+    )) as ((folderId: string) => Promise<string>) &
+    ((folderId: string, deviceID: string) => Promise<string>) &
+    ((folderId: string, callback: cbT<string>) => void) &
+    ((folderId: string, deviceId: string, callback: cbT<string>) => void);
 
   /**
    * DB Endpoints:
@@ -422,9 +453,9 @@ export class syncthing {
   };
   public cluster = {
     getPendingDevices: this.cluster_getPendingDevices,
-    //deletePendingDevices: this.cluster_deletePendingDevices,
+    deletePendingDevices: this.cluster_deletePendingDevices,
     getPendingFolders: this.cluster_getPendingFolders,
-    //deletePendingFolders: this.cluster_deletePendingFolders,
+    deletePendingFolders: this.cluster_deletePendingFolders,
   };
   public folder = {
     //errors: this.folder_errors,

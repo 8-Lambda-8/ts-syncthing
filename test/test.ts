@@ -67,6 +67,12 @@ st.config.getDevice(
 st.cluster.getPendingDevices(logThis);
 st.cluster.getPendingFolders(logThis);
 
+st.cluster.deletePendingDevices(
+  "XXXXXXX-TUQZPVJ-BGZZGO6-YXD4B65-E4JP35G-XCFTHK2-VIADMFH-JIYXNA4",
+  logThis,
+);
+st.cluster.deletePendingFolders("XXXXX-wvdxe", logThis);
+
 st.db.completion({}, logThis);
 st.db.completion(
   { device: "XXXXXXX-JOAXZRU-JLATGU6-S664HNW-CYWMIQV-SI4DBBV-VLVUYC7-QDL6HAW" },
