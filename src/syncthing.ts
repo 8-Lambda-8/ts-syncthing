@@ -319,6 +319,13 @@ export class syncthing {
   ) => Promise<deviceT>) &
     ((id: string, callback: cbT<deviceT>) => void);
 
+  private config_deleteFolder = ((id: string, callback?: cbT<string>) =>
+    this.request(
+      { endpoint: "config/folders/" + id, method: "DELETE" },
+      callback,
+    )) as ((id: string) => Promise<string>) &
+    ((id: string, callback: cbT<string>) => void);
+
   private config_deleteDevice = ((id: string, callback?: cbT<string>) =>
     this.request(
       { endpoint: "config/devices/" + id, method: "DELETE" },
@@ -458,7 +465,7 @@ export class syncthing {
     //putDevice: this.config_putDevice,
     //patchFolder: this.config_patchFolder,
     //patchDevice: this.config_patchDevice,
-    //deleteFolder: this.config_deleteFolder,
+    deleteFolder: this.config_deleteFolder,
     deleteDevice: this.config_deleteDevice,
     //options: this.config_options,
     //ldap: this.config_ldap,
