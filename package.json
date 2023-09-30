@@ -4,6 +4,11 @@
   "description": "syncthing rest api with typescript",
   "main": "build/src/syncthing.js",
   "types": "build/src/syncthing.d.ts",
+  "homepage": "https://github.com/8-Lambda-8/ts-syncthing",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/8-Lambda-8/ts-syncthing.git"
+  },
   "scripts": {
     "build": "tsc",
     "build:watch": "tsc --watch",
