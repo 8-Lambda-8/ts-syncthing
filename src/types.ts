@@ -222,6 +222,15 @@ export type optionT = {
   insecureAllowOldTLSVersions: boolean;
 };
 
+export type ldapT = {
+  address: string;
+  bindDN: string;
+  transport: string;
+  insecureSkipVerify: boolean;
+  searchBaseDN: string;
+  searchFilter: string;
+};
+
 export type getConfigT = {
   version: number;
   folders: folderT[];
@@ -241,14 +250,7 @@ export type getConfigT = {
     insecureSkipHostcheck: boolean;
     insecureAllowFrameLoading: boolean;
   };
-  ldap: {
-    address: string;
-    bindDN: string;
-    transport: string;
-    insecureSkipVerify: boolean;
-    searchBaseDN: string;
-    searchFilter: string;
-  };
+  ldap: ldapT;
   options: optionT;
   remoteIgnoredDevices: [];
 };
