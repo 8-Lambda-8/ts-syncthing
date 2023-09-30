@@ -23,6 +23,7 @@ import {
   pendingFoldersT,
   optionT,
   ldapT,
+  guiT,
 } from "./types";
 
 export class syncthing {
@@ -344,6 +345,9 @@ export class syncthing {
   private config_getLdap = ((callback?: cbT<ldapT>) =>
     this.request({ endpoint: "config/ldap" }, callback)) as funOverT<ldapT>;
 
+  private config_getGui = ((callback?: cbT<guiT>) =>
+    this.request({ endpoint: "config/gui" }, callback)) as funOverT<guiT>;
+
   /**
    * Cluster Endpoints:
    *
@@ -480,7 +484,7 @@ export class syncthing {
     deleteDevice: this.config_deleteDevice,
     getOptions: this.config_getOptions,
     getldap: this.config_getLdap,
-    //gui: this.config_gui,
+    getGui: this.config_getGui,
   };
   public cluster = {
     getPendingDevices: this.cluster_getPendingDevices,

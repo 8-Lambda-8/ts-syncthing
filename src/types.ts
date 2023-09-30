@@ -231,25 +231,27 @@ export type ldapT = {
   searchFilter: string;
 };
 
+export type guiT = {
+  enabled: boolean;
+  address: string;
+  unixSocketPermissions: string;
+  user: string;
+  password: string;
+  authMode: string;
+  useTLS: boolean;
+  apiKey: string;
+  insecureAdminAccess: boolean;
+  theme: string;
+  debugging: boolean;
+  insecureSkipHostcheck: boolean;
+  insecureAllowFrameLoading: boolean;
+};
+
 export type getConfigT = {
   version: number;
   folders: folderT[];
   devices: deviceT[];
-  gui: {
-    enabled: boolean;
-    address: string;
-    unixSocketPermissions: string;
-    user: string;
-    password: string;
-    authMode: string;
-    useTLS: boolean;
-    apiKey: string;
-    insecureAdminAccess: boolean;
-    theme: string;
-    debugging: boolean;
-    insecureSkipHostcheck: boolean;
-    insecureAllowFrameLoading: boolean;
-  };
+  gui: guiT;
   ldap: ldapT;
   options: optionT;
   remoteIgnoredDevices: [];
