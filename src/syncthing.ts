@@ -21,6 +21,7 @@ import {
   deviceT,
   pendingDevicesT,
   pendingFoldersT,
+  optionT,
 } from "./types";
 
 export class syncthing {
@@ -333,6 +334,12 @@ export class syncthing {
     )) as ((id: string) => Promise<string>) &
     ((id: string, callback: cbT<string>) => void);
 
+  private config_getOptions = ((callback?: cbT<optionT>) =>
+    this.request(
+      { endpoint: "config/options" },
+      callback,
+    )) as funOverT<optionT>;
+
   /**
    * Cluster Endpoints:
    *
@@ -467,7 +474,7 @@ export class syncthing {
     //patchDevice: this.config_patchDevice,
     deleteFolder: this.config_deleteFolder,
     deleteDevice: this.config_deleteDevice,
-    //options: this.config_options,
+    getOptions: this.config_getOptions,
     //ldap: this.config_ldap,
     //gui: this.config_gui,
   };

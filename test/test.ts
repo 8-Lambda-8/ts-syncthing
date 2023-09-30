@@ -64,6 +64,8 @@ st.config.getDevice(
   logThis,
 );
 
+st.config.getOptions(logThis);
+
 st.cluster.getPendingDevices(logThis);
 st.cluster.getPendingFolders(logThis);
 
