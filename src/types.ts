@@ -278,6 +278,26 @@ export type pendingFoldersT = {
   };
 };
 
+export type folderErrorsT = {
+  folder: string;
+  errors: [
+    {
+      path: string;
+      error: string;
+    },
+  ];
+  page: number;
+  perpage: number;
+};
+
+export type folderVersionsT = {
+  [path: string]: {
+    versionTime: string; //ISO Date string
+    modTime: string; //ISO Date string
+    size: number;
+  }[];
+};
+
 export type completionT = {
   completion: number;
   globalBytes: number;

@@ -24,6 +24,8 @@ import {
   optionT,
   ldapT,
   guiT,
+  folderErrorsT,
+  folderVersionsT,
 } from "./types";
 
 export class syncthing {
@@ -397,6 +399,28 @@ export class syncthing {
     ((folderId: string, deviceId: string, callback: cbT<string>) => void);
 
   /**
+   * Folder Endpoints:
+   *
+   */
+
+  private folder_errors = ((folder: string, callback?: cbT<folderErrorsT>) =>
+    this.request(
+      { endpoint: "folder/errors", args: { folder } },
+      callback,
+    )) as ((folder: string) => Promise<folderErrorsT>) &
+    ((folder: string, callback: cbT<folderErrorsT>) => void);
+
+  private folder_getVersions = ((
+    folder: string,
+    callback?: cbT<folderVersionsT>,
+  ) =>
+    this.request(
+      { endpoint: "folder/versions", args: { folder } },
+      callback,
+    )) as ((folder: string) => Promise<folderVersionsT>) &
+    ((folder: string, callback: cbT<folderVersionsT>) => void);
+
+  /**
    * DB Endpoints:
    *
    * */
@@ -493,8 +517,8 @@ export class syncthing {
     deletePendingFolders: this.cluster_deletePendingFolders,
   };
   public folder = {
-    //errors: this.folder_errors,
-    //getVersions: this.folder_getVersions,
+    errors: this.folder_errors,
+    getVersions: this.folder_getVersions,
     //setVersions: this.folder_setVersions,
   };
   public db = {

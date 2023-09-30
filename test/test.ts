@@ -77,6 +77,9 @@ st.cluster.deletePendingDevices(
 );
 st.cluster.deletePendingFolders("XXXXX-wvdxe", logThis);
 
+st.folder.errors("XXXXX-kvyer", logThis);
+st.folder.getVersions("XXXXX-kvyer", logThis);
+
 st.db.completion({}, logThis);
 st.db.completion(
   { device: "XXXXXXX-JOAXZRU-JLATGU6-S664HNW-CYWMIQV-SI4DBBV-VLVUYC7-QDL6HAW" },
