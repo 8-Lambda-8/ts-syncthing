@@ -1,11 +1,11 @@
 import { configT } from "src/types";
 import { syncthing } from "../src/syncthing";
 
-const options: configT = {
+const config: configT = {
   apiKey: "Fumn9ume4NczkVnTgsagjmtbVpAnDizT",
 };
 
-const st = new syncthing(options);
+const st = new syncthing(config);
 
 function logThis(res, err) {
   if (err) console.error(err);
